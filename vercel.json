@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/causes",
+      "destination": "/our-work",
+      "permanent": true
+    },
+    {
+      "source": "/service",
+      "destination": "/our-approach",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/our-work",
+      "destination": "/causes"
+    },
+    {
+      "source": "/our-approach",
+      "destination": "/service"
+    }
+  ]
+}
