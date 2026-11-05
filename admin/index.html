@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#001d23">
+  <title>Admin Dashboard | TESR-U</title>
+  <meta name="description" content="TESR-U website administration dashboard.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/admin.css" rel="stylesheet">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to dashboard content</a>
+
+  <div class="admin-shell">
+    <aside class="sidebar" id="admin-sidebar" aria-label="Dashboard navigation">
+      <div class="sidebar-brand">
+        <a class="brand-mark" href="/admin" aria-label="TESR-U dashboard home">
+          <span class="brand-symbol">T</span>
+          <span class="brand-copy"><strong>TESR<span>-U</span></strong><small>ADMINISTRATION</small></span>
+        </a>
+        <button class="icon-button sidebar-close" type="button" data-action="close-sidebar" aria-label="Close navigation">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <button class="nav-link active" type="button" data-view="overview" aria-current="page">
+          <i class="bi bi-grid-1x2"></i><span>Overview</span>
+        </button>
+
+        <div class="nav-section-label">CONTENT</div>
+        <button class="nav-link" type="button" data-view="news">
+          <i class="bi bi-newspaper"></i><span>News &amp; Updates</span><span class="nav-trailing"><i class="bi bi-chevron-right"></i></span>
+        </button>
+        <button class="nav-link" type="button" data-view="announcements">
+          <i class="bi bi-megaphone"></i><span>Announcements</span>
+        </button>
+
+        <div class="nav-section-label">WEBSITE</div>
+        <button class="nav-link" type="button" data-view="navigation">
+          <i class="bi bi-layout-text-sidebar"></i><span>Navigation &amp; Footer</span>
+        </button>
+        <button class="nav-link" type="button" data-view="media">
+          <i class="bi bi-images"></i><span>Media Library</span>
+        </button>
+        <button class="nav-link" type="button" data-view="organisation">
+          <i class="bi bi-building"></i><span>Organisation Profile</span>
+        </button>
+        <button class="nav-link" type="button" data-view="settings">
+          <i class="bi bi-sliders"></i><span>Website Settings</span>
+        </button>
+
+        <div class="nav-section-label">ADMINISTRATION</div>
+        <button class="nav-link" type="button" data-view="activity">
+          <i class="bi bi-clock-history"></i><span>Activity Log</span>
+        </button>
+        <button class="nav-link" type="button" data-view="security">
+          <i class="bi bi-shield-lock"></i><span>Admin Account</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="site-status-card">
+          <span class="status-indicator"></span>
+          <div><strong>Public website</strong><small>tesruganda.org</small></div>
+          <a href="https://www.tesruganda.org/" target="_blank" rel="noopener noreferrer" aria-label="Open public website">
+            <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+        </div>
+        <div class="sidebar-user">
+          <div class="user-avatar">A</div>
+          <div class="user-details"><strong>Administrator</strong><small>Main account</small></div>
+          <button class="icon-button" type="button" data-view="security" aria-label="Account options"><i class="bi bi-three-dots"></i></button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="sidebar-backdrop" data-action="close-sidebar"></div>
+
+    <main class="main-area" id="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button menu-toggle" type="button" data-action="open-sidebar" aria-label="Open navigation">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumb"><span>TESR-U</span><i class="bi bi-chevron-right"></i><strong id="current-section">Overview</strong></div>
+        </div>
+        <div class="topbar-actions">
+          <span class="preview-label"><i class="bi bi-eye"></i> Dashboard preview</span>
+          <a class="topbar-site-link" href="https://www.tesruganda.org/" target="_blank" rel="noopener noreferrer">
+            View website <i class="bi bi-arrow-up-right"></i>
+          </a>
+          <div class="topbar-avatar" aria-label="Administrator">A</div>
+        </div>
+      </header>
+
+      <div class="preview-notice" role="status">
+        <i class="bi bi-info-circle"></i>
+        <div><strong>Setup in progress.</strong> This is the dashboard layout preview. Content publishing, uploads and settings changes will be enabled after authentication and database permissions are connected.</div>
+      </div>
+
+      <section class="page-content" id="view-root" aria-live="polite">
+        <div class="loading-state"><span class="loading-spinner"></span>Loading dashboard…</div>
+      </section>
+
+      <footer class="admin-footer">
+        <span>TESR-U Administration</span>
+        <span>True Era Sustainable Response Uganda</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="editor-modal" hidden>
+    <section class="editor-modal" role="dialog" aria-modal="true" aria-labelledby="editor-modal-title">
+      <div class="modal-header">
+        <div><span class="eyebrow">CONTENT EDITOR</span><h2 id="editor-modal-title">Create an article</h2></div>
+        <button class="icon-button" type="button" data-action="close-modal" aria-label="Close editor"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <form id="article-preview-form">
+        <label class="form-field"><span>Article title</span><input name="title" type="text" placeholder="Enter a clear article title" required></label>
+        <div class="form-row">
+          <label class="form-field"><span>Category</span><select name="category"><option>News</option><option>Announcement</option><option>Field Story</option><option>Organisation Update</option></select></label>
+          <label class="form-field"><span>Content status</span><select name="status"><option value="draft">Save as draft</option><option value="published">Publish</option></select></label>
+        </div>
+        <label class="form-field"><span>Short summary</span><textarea name="summary" rows="3" placeholder="A short introduction for the News &amp; Updates page"></textarea></label>
+        <div class="editor-note"><i class="bi bi-lock"></i><span>This editor is a layout preview. Saving and publishing are not active until the Supabase content tables and access policies are ready.</span></div>
+        <div class="modal-actions">
+          <button class="button button-quiet" type="button" data-action="close-modal">Close</button>
+          <button class="button button-primary" type="submit">Check form</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <script src="assets/js/admin.js" defer></script>
+</body>
+</html>
