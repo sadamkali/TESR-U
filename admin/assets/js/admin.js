@@ -199,6 +199,8 @@
     document.querySelectorAll(".nav-link[data-view]").forEach(button => {
       const isActive = button === activeButton;
       button.classList.toggle("active", isActive);
+      const navItem = button.closest(".nav-item");
+      if (navItem) navItem.classList.toggle("active", isActive);
       if (isActive) button.setAttribute("aria-current", "page");
       else button.removeAttribute("aria-current");
     });
