@@ -1,4 +1,4 @@
-name: Inspect TinyDash dashboard template
+name: Prepare TinyDash admin theme assets
 
 on:
   push:
@@ -6,26 +6,53 @@ on:
       - inspect/tinydash-template
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  extract-template:
+  vendor-theme:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Extract dashboard template
-        run: |
-          mkdir -p tinydash-template
-          unzip -q tinydash-master.zip -d tinydash-template
-          echo "Top-level archive entries:"
-          find tinydash-template -maxdepth 3 -type f | sort | head -200
-
-      - name: Upload extracted template
-        uses: actions/upload-artifact@v4
         with:
-          name: tinydash-template-extracted
-          path: tinydash-template/
-          if-no-files-found: error
-          retention-days: 2
+          fetch-depth: 0
+
+      - name: Copy the selected TinyDash light theme assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          unzip -q tinydash-master.zip -d /tmp/tesru-tinydash
+          source_dir="/tmp/tesru-tinydash/tinydash-master/light"
+          target_dir="admin/vendor/tinydash"
+          mkdir -p "$target_dir/css" "$target_dir/js" "$target_dir/fonts"
+
+          cp "$source_dir/css/app-light.css" "$target_dir/css/"
+          cp "$source_dir/css/app-dark.css" "$target_dir/css/"
+          cp "$source_dir/css/simplebar.css" "$target_dir/css/"
+          cp "$source_dir/css/feather.css" "$target_dir/css/"
+
+          cp "$source_dir/js/jquery.min.js" "$target_dir/js/"
+          cp "$source_dir/js/popper.min.js" "$target_dir/js/"
+          cp "$source_dir/js/bootstrap.min.js" "$target_dir/js/"
+          cp "$source_dir/js/simplebar.min.js" "$target_dir/js/"
+          cp "$source_dir/js/tinycolor-min.js" "$target_dir/js/"
+          cp "$source_dir/js/config.js" "$target_dir/js/"
+
+          cp "$source_dir/fonts/feather."* "$target_dir/fonts/"
+
+          echo "Prepared assets:"
+          find "$target_dir" -type f -printf '%p (%s bytes)\n' | sort
+
+      - name: Commit vendor assets to the inspection branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add admin/vendor/tinydash
+          if git diff --cached --quiet; then
+            echo "No vendor asset changes to commit."
+            exit 0
+          fi
+          git commit -m "Add TinyDash theme assets for TESR-U admin"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
