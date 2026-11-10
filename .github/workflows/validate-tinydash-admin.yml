@@ -24,12 +24,10 @@ jobs:
 
           root = Path(".")
           html = (root / "admin/index.html").read_text()
-          css = (root / "admin/assets/css/admin.css").read_text()
           js = (root / "admin/assets/js/admin.js").read_text()
 
           class Parser(HTMLParser):
-              def error(self, message):
-                  raise RuntimeError(message)
+              pass
 
           Parser().feed(html)
 
@@ -38,11 +36,13 @@ jobs:
           if missing:
               raise SystemExit("Missing admin assets: " + ", ".join(missing))
 
-          for required in ["#view-root", "#current-section", "#admin-sidebar", "#editor-modal", "#toast-region"]:
+          required_ids = ['id="view-root"', 'id="current-section"', 'id="admin-sidebar"', 'id="editor-modal"', 'id="toast-region"']
+          for required in required_ids:
               if required not in html:
-                  raise SystemExit("Missing required HTML hook: " + required)
+                  raise SystemExit("Missing required HTML id: " + required)
 
-          for hook in ['getElementById("view-root")', 'getElementById("current-section")', 'getElementById("admin-sidebar")', 'getElementById("editor-modal")', 'getElementById("toast-region")']:
+          required_js = ['getElementById("view-root")', 'getElementById("current-section")', 'getElementById("admin-sidebar")', 'getElementById("editor-modal")', 'getElementById("toast-region")']
+          for hook in required_js:
               if hook not in js:
                   raise SystemExit("Missing JS hook: " + hook)
 
