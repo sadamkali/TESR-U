@@ -1,0 +1,31 @@
+name: Inspect TinyDash dashboard template
+
+on:
+  push:
+    branches:
+      - inspect/tinydash-template
+
+permissions:
+  contents: read
+
+jobs:
+  extract-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Extract dashboard template
+        run: |
+          mkdir -p tinydash-template
+          unzip -q tinydash-master.zip -d tinydash-template
+          echo "Top-level archive entries:"
+          find tinydash-template -maxdepth 3 -type f | sort | head -200
+
+      - name: Upload extracted template
+        uses: actions/upload-artifact@v4
+        with:
+          name: tinydash-template-extracted
+          path: tinydash-template/
+          if-no-files-found: error
+          retention-days: 2
